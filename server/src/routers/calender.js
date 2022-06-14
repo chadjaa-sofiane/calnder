@@ -37,4 +37,12 @@ router.post("/addNote", (req, res) => {
 }
 )
 
+router.put("/updateNote", (req, res) => {
+    const { date, note } = req.body;
+    const index = list.findIndex(item => item.date == date);
+    list[index].note = note;
+    res.json(list[index]);
+}
+)
+
 export default router;

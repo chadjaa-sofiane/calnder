@@ -43,19 +43,18 @@ const CalenderList = () => {
     return (
         <div className="w-auto m-auto p-5 shadow-md">
             <div>CalenderList</div>
-            <div className="flex justify-between m-5 flex-wrap min-h-40">
+            <div className="flex flex-col justify-between m-5 flex-wrap min-h-40">
                 {notes.map((note, index) => (
                     <CalenderDay key={index} date={note.date} note={note.note} />
                 ))}
             </div>
             <div className="flex justify-center gap-2">
-                {weekNumber > 1 &&
-                    <button
-                        onClick={goToPreviousWeek}
-                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-                        prev
-                    </button>
-                }
+                <button
+                    onClick={goToPreviousWeek}
+                    disabled={weekNumber === 1}
+                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded disabled:bg-red-200">
+                    prev
+                </button>
                 <button
                     onClick={goToNextWeek}
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
