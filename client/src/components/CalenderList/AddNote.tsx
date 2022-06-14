@@ -1,7 +1,6 @@
-import axios from "axios"
 import React, { useState } from "react"
 import { Modal } from "../core/Modal"
-
+import { calenderApi } from "../../helpers/calenderApi"
 interface AddNoteProps {
     date: string
     open: boolean
@@ -11,23 +10,25 @@ interface AddNoteProps {
 const AddNote = ({ date, open, setOpen }: AddNoteProps) => {
     const [note, setNote] = useState("");
     const [error, setError] = useState("");
-    const submitAddNote = async (e: React.ChangeEvent<HTMLFormElement>) => {
-        e.preventDefault();
+
+    const submitAddNote = async () => {
         try {
             if (!note) throw new Error("Note is required");
-            await axios.post("http://localhost:5000/api/calender/allNote", { date, note });
+            await calenderApi.post("/addNote", { date, note });
             setOpen(false);
         } catch (error: any) {
-            console.log(error);
-
             setError(error.message);
         }
-
     }
+
+    const closeModal = () => {
+        setOpen(false);
+    }
+
     return (
         <Modal open={open} setOpen={setOpen}>
             <div className="w-auto m-auto p-5 shadow-md">
-                <form onSubmit={submitAddNote}>
+                <div>
                     <div className="flex flex-wrap">
                         <div className="w-full">
                             <label className="block text-lg text-blue-700 font-bold mb-2" htmlFor="note">
@@ -42,13 +43,17 @@ const AddNote = ({ date, open, setOpen }: AddNoteProps) => {
                             />
                         </div>
                     </div>
-                    <div className="flex justify-end mt-5">
-                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    <div className="flex justify-between mt-5">
+                        <button onClick={closeModal} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                            Cancel
+                        </button>
+                        <button onClick={submitAddNote} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                             Add
                         </button>
+
                     </div>
                     {error && <p className="text-red-500">{error}</p>}
-                </form>
+                </div>
 
             </div>
         </Modal>

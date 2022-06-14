@@ -1,6 +1,6 @@
-import axios from "axios";
 import moment from "moment";
 import { useState, useEffect } from "react";
+import { calenderApi } from "../../helpers/calenderApi"
 import CalenderDay from "./CalenderDay";
 
 //get the days of the week
@@ -27,7 +27,7 @@ const CalenderList = () => {
     }
     useEffect(() => {
         const fetchData = async () => {
-            const { data } = await axios.get("http://localhost:5000/api/calender/allNotes");
+            const { data } = await calenderApi.get("allNotes");
             const notes = getDaysOfWeek(weekNumber).map((date: any, index) => {
                 const note = data.find((note: any) => note.date === date);
                 return {
@@ -43,12 +43,12 @@ const CalenderList = () => {
     return (
         <div className="w-auto m-auto p-5 shadow-md">
             <div>CalenderList</div>
-            <div className="flex justify-between m-5 flex-wrap">
+            <div className="flex justify-between m-5 flex-wrap min-h-40">
                 {notes.map((note, index) => (
                     <CalenderDay key={index} date={note.date} note={note.note} />
                 ))}
             </div>
-            <div className="flex justify-between">
+            <div className="flex justify-center gap-2">
                 {weekNumber > 1 &&
                     <button
                         onClick={goToPreviousWeek}
