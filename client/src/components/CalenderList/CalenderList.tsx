@@ -16,7 +16,7 @@ const getDaysOfWeek = (week: number) => {
 
 
 const CalenderList = () => {
-    const [weekNumber, setWeekNumber] = useState(2);
+    const [weekNumber, setWeekNumber] = useState(0);
     const [notes, setNotes] = useState<any[]>([]);
 
     const goToNextWeek = () => {
@@ -51,7 +51,7 @@ const CalenderList = () => {
             <div className="flex justify-center gap-2">
                 <button
                     onClick={goToPreviousWeek}
-                    disabled={weekNumber === 1}
+                    disabled={weekNumber === 0}
                     className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded disabled:bg-red-200">
                     prev
                 </button>

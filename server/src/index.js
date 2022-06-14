@@ -1,7 +1,7 @@
 import express from "express"
 import cors from "cors"
 import calenderRouter from "./routers/calender.js";
-
+import db from "./db/index.js";
 
 const app = express();
 
